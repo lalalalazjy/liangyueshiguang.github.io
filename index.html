@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#e86f57">
+  <title>在一起｜情侣共创生活看板</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.webmanifest">
+</head>
+<body class="auth-pending">
+  <section class="login-gate" id="login-gate" aria-labelledby="login-title">
+    <div class="login-panel">
+      <div class="login-brand" aria-hidden="true">合</div>
+      <div class="login-heading">
+        <p>月亮的小家</p>
+        <h1 id="login-title">在一起</h1>
+      </div>
+      <form id="login-form" class="login-form">
+        <label>
+          <span>用户名</span>
+          <input name="username" autocomplete="username" pattern="[A-Za-z0-9_]{3,24}" placeholder="用户名" disabled required>
+        </label>
+        <label>
+          <span>密码</span>
+          <input name="password" type="password" minlength="8" autocomplete="current-password" placeholder="密码" disabled required>
+        </label>
+        <button class="btn primary" type="submit" disabled>正在连接</button>
+        <p id="login-feedback" class="login-feedback" aria-live="polite"></p>
+      </form>
+      <p class="login-note">私人生活空间</p>
+    </div>
+  </section>
+
+  <div class="shell">
+    <aside class="sidebar">
+      <button class="brand" data-route="home"><b>合</b><span><strong>在一起</strong><small>共同生活手账</small></span></button>
+      <nav>
+        <button class="nav active" data-route="home"><i data-lucide="house"></i><span>首页</span></button>
+        <button class="nav" data-route="plans"><i data-lucide="calendar-days"></i><span>计划</span></button>
+        <button class="nav" data-route="wishes"><i data-lucide="sparkles"></i><span>愿望墙</span></button>
+        <button class="nav" data-route="growth"><i data-lucide="sprout"></i><span>共同成长</span></button>
+        <button class="nav" data-route="health"><i data-lucide="moon-star"></i><span>健康作息</span></button>
+        <button class="nav" data-route="finance"><i data-lucide="wallet-cards"></i><span>生活记账</span></button>
+        <button class="nav" data-route="messages"><i data-lucide="messages-square"></i><span>留言与回忆</span></button>
+      </nav>
+      <button class="space" id="space-control" type="button">
+        <div class="avatars"><span id="current-avatar">月</span><span>亮</span></div>
+        <div><strong id="space-name">月亮的小家</strong><small id="space-status">本地模式</small></div>
+      </button>
+    </aside>
+
+    <main>
+      <header>
+        <div><p id="eyebrow"></p><h1 id="title"></h1></div>
+        <div class="header-actions">
+          <button class="icon-btn" id="sync" title="同步"><i data-lucide="refresh-cw"></i></button>
+          <button class="icon-btn account-entry" id="account-control" title="账号与同步" aria-label="账号与同步"><i data-lucide="circle-user-round"></i></button>
+          <button class="btn primary" data-action="quick"><i data-lucide="plus"></i><span>记一件事</span></button>
+        </div>
+      </header>
+      <div id="content"></div>
+    </main>
+  </div>
+
+  <nav class="mobile-nav">
+    <button class="active" data-route="home"><i data-lucide="house"></i><span>首页</span></button>
+    <button data-route="plans"><i data-lucide="calendar-days"></i><span>计划</span></button>
+    <button data-route="wishes"><i data-lucide="sparkles"></i><span>愿望</span></button>
+    <button data-route="growth"><i data-lucide="sprout"></i><span>成长</span></button>
+    <button data-route="more"><i data-lucide="menu"></i><span>更多</span></button>
+  </nav>
+
+  <dialog id="quick-dialog">
+    <div class="dialog-head"><div><small>快捷入口</small><h2>今天想记录什么？</h2></div><button class="icon-btn close-dialog"><i data-lucide="x"></i></button></div>
+    <div class="quick-grid">
+      <button data-form="task"><i data-lucide="check-square"></i><span><strong>新待办</strong><small>安排一件要做的事</small></span></button>
+      <button data-form="wish"><i data-lucide="sparkles"></i><span><strong>新愿望</strong><small>记下想一起做的事</small></span></button>
+      <button data-form="progress"><i data-lucide="activity"></i><span><strong>记进展</strong><small>推进一项共同目标</small></span></button>
+      <button data-form="expense"><i data-lucide="receipt-text"></i><span><strong>月度支出</strong><small>填写一个月的分类汇总</small></span></button>
+      <button data-form="message"><i data-lucide="message-circle-heart"></i><span><strong>写留言</strong><small>给对方留一句话</small></span></button>
+      <button data-form="sleep"><i data-lucide="moon"></i><span><strong>睡眠月报</strong><small>补充本月作息</small></span></button>
+    </div>
+  </dialog>
+
+  <dialog id="form-dialog">
+    <form id="record-form">
+      <div class="dialog-head"><div><small id="form-kicker"></small><h2 id="form-title"></h2></div><button type="button" class="icon-btn close-dialog"><i data-lucide="x"></i></button></div>
+      <div class="form-grid" id="form-fields"></div>
+      <div class="dialog-actions"><button type="button" class="btn ghost close-dialog">取消</button><button class="btn primary" type="submit"><i data-lucide="check"></i><span id="form-submit">保存</span></button></div>
+    </form>
+  </dialog>
+
+  <dialog id="account-dialog" class="account-dialog">
+    <div class="dialog-head">
+      <div><small>正式版账户与同步</small><h2 id="account-title">情侣空间</h2></div>
+      <button type="button" class="icon-btn close-dialog"><i data-lucide="x"></i></button>
+    </div>
+    <div id="account-content" class="account-content"></div>
+  </dialog>
+
+  <dialog id="intimacy-detail-dialog" class="small-dialog">
+    <div class="dialog-head">
+      <div><small>亲密日历</small><h2 id="intimacy-detail-date"></h2></div>
+      <button type="button" class="icon-btn close-dialog"><i data-lucide="x"></i></button>
+    </div>
+    <div class="heart-detail">
+      <span class="detail-heart" aria-hidden="true">♥</span>
+      <p id="intimacy-detail-note"></p>
+    </div>
+    <div class="dialog-actions">
+      <button type="button" class="btn danger-ghost" id="intimacy-remove">移除这颗心</button>
+      <button type="button" class="btn primary" id="intimacy-edit"><i data-lucide="pencil"></i>修改</button>
+    </div>
+  </dialog>
+
+  <dialog id="intimacy-remove-dialog" class="small-dialog">
+    <div class="dialog-head">
+      <div><small>再次确认</small><h2>移除这颗心？</h2></div>
+      <button type="button" class="icon-btn close-dialog"><i data-lucide="x"></i></button>
+    </div>
+    <div class="confirm-copy"><p>日期和悄悄话都会从两个人的日历中删除，这个操作不能撤销。</p></div>
+    <div class="dialog-actions">
+      <button type="button" class="btn ghost close-dialog">取消</button>
+      <button type="button" class="btn danger" id="intimacy-remove-confirm">确认移除</button>
+    </div>
+  </dialog>
+
+  <dialog id="lightbox-dialog" class="lightbox-dialog">
+    <button type="button" class="icon-btn close-dialog lightbox-close" aria-label="关闭"><i data-lucide="x"></i></button>
+    <img id="lightbox-image" alt="图片大图">
+  </dialog>
+
+  <dialog id="letter-dialog" class="small-dialog">
+    <div class="dialog-head">
+      <div><small>未来信箱</small><h2 id="letter-title"></h2></div>
+      <button type="button" class="icon-btn close-dialog"><i data-lucide="x"></i></button>
+    </div>
+    <div class="letter-content">
+      <p id="letter-meta"></p>
+      <div id="letter-text"></div>
+    </div>
+  </dialog>
+
+  <div id="toast"></div>
+  <script src="assets/vendor/supabase.js"></script>
+  <script src="config.js"></script>
+  <script src="cloud.js"></script>
+  <script src="assets/vendor/lucide.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
