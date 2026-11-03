@@ -599,7 +599,6 @@ async function importBackup(file){
 function syncSpaceStatus(){
   const status=document.querySelector("#space-status");
   const name=document.querySelector("#space-name");
-  const avatar=document.querySelector("#current-avatar");
   if(!status||!name)return;
   if(cloudStatus.ready){
     name.textContent=cloudStatus.space?.name||"我们的情侣空间";
@@ -610,12 +609,6 @@ function syncSpaceStatus(){
   }else{
     name.textContent="月亮的小家";
     status.textContent=cloudStatus.configured?"点击登录同步":"本地模式";
-  }
-  if(avatar){
-    const profile=cloudStatus.profile;
-    avatar.textContent=profile?.avatar_url?"":(profile?.display_name||"月").slice(0,1);
-    avatar.style.backgroundImage=profile?.avatar_url?`url("${profile.avatar_url}")`:"";
-    avatar.classList.toggle("has-image",Boolean(profile?.avatar_url));
   }
 }
 function syncAuthGate(){

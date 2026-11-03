@@ -1,4 +1,4 @@
-const NAME = "together-supabase-v25";
+const NAME = "together-supabase-v27";
 const FILES = [
   "./",
   "./index.html",
