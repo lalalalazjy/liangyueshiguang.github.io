@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#e86f57">
+  <title>在一起｜情侣共创生活看板</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.webmanifest">
+</head>
+<body class="auth-pending">
+  <section class="login-gate" id="login-gate" aria-labelledby="login-title">
+    <div class="login-panel">
+      <div class="login-brand" aria-hidden="true">合</div>
+      <div class="login-heading">
+        <p>月亮的小家</p>
+        <h1 id="login-title">在一起</h1>
+      </div>
+      <form id="login-form" class="login-form">
+        <label>
+          <span>用户名</span>
+          <input name="username" autocomplete="username" pattern="[A-Za-z0-9_]{3,24}" placeholder="用户名" disabled required>
+        </label>
+        <label>
+          <span>密码</span>
+          <input name="password" type="password" minlength="8" autocomplete="current-password" placeholder="密码" disabled required>
+        </label>
+        <button class="btn primary" type="submit" disabled>正在连接</button>
+        <p id="login-feedback" class="login-feedback" aria-live="polite"></p>
+      </form>
+      <p class="login-note">私人生活空间</p>
+    </div>
+  </section>
+
+  <div class="shell">
+    <aside class="sidebar">
+      <button class="brand" data-route="home"><b>合</b><span><strong>在一起</strong><small>共同生活手账</small></span></button>
+      <nav>
+        <button class="nav active" data-route="home"><i data-lucide="house"></i><span>首页</span></button>
+        <button class="nav" data-route="plans"><i data-lucide="calendar-days"></i><span>计划</span></button>
+        <button class="nav" data-route="wishes"><i data-lucide="sparkles"></i><span>愿望墙</span></button>
+        <button class="nav" data-route="growth"><i data-lucide="sprout"></i><span>共同成长</span></button>
+        <button class="nav" data-route="memories"><i data-lucide="images"></i><span>生活回忆</span></button>
+        <button class="nav" data-route="notes"><i data-lucide="notebook-pen"></i><span>共享笔记</span></button>
+        <button class="nav" data-route="health"><i data-lucide="moon-star"></i><span>健康作息</span></button>
+        <button class="nav" data-route="finance"><i data-lucide="wallet-cards"></i><span>生活记账</span></button>
+        <button class="nav" data-route="messages"><i data-lucide="messages-square"></i><span>留言与信箱</span></button>
+      </nav>
+      <button class="space" id="space-control" type="button">
+        <div class="avatars"><span class="member-a">月</span><span class="member-b">亮</span></div>
+        <div><strong id="space-name">月亮的小家</strong><small id="space-status">本地模式</small></div>
+      </button>
+    </aside>
+
+    <main>
+      <header>
+        <div><p id="eyebrow"></p><h1 id="title"></h1></div>
+        <div class="header-actions">
+          <button class="icon-btn" id="sync" title="同步"><i data-lucide="refresh-cw"></i></button>
+          <button class="icon-btn account-entry" id="account-control" title="账号与同步" aria-label="账号与同步"><i data-lucide="circle-user-round"></i></button>
+          <button class="btn primary" data-action="quick"><i data-lucide="plus"></i><span>记一件事</span></button>
+        </div>
+      </header>
+      <div id="content"></div>
+    </main>
+  </div>
+
+  <nav class="mobile-nav">
+    <button class="active" data-route="home"><i data-lucide="house"></i><span>首页</span></button>
+    <button data-route="plans"><i data-lucide="calendar-days"></i><span>计划</span></button>
+    <button data-route="wishes"><i data-lucide="sparkles"></i><span>愿望</span></button>
+    <button data-route="growth"><i data-lucide="sprout"></i><span>成长</span></button>
+    <button data-route="more"><i data-lucide="menu"></i><span>更多</span></button>
+  </nav>
+
+  <dialog id="quick-dialog">
+    <div class="dialog-head"><div><small>快捷入口</small><h2>今天想记录什么？</h2></div><button class="icon-btn close-dialog"><i data-lucide="x"></i></button></div>
+    <div class="quick-grid">
+      <button data-form="task"><i data-lucide="check-square"></i><span><strong>新待办</strong><small>安排一件要做的事</small></span></button>
+      <button data-form="wish"><i data-lucide="sparkles"></i><span><strong>新愿望</strong><small>记下想一起做的事</small></span></button>
+      <button data-form="progress"><i data-lucide="activity"></i><span><strong>记进展</strong><small>推进一项共同目标</small></span></button>
+      <button data-form="memory"><i data-lucide="images"></i><span><strong>记下回忆</strong><small>留住一件刚刚发生的小事</small></span></button>
+      <button data-form="note"><i data-lucide="notebook-pen"></i><span><strong>写笔记</strong><small>记下灵感、做法或清单</small></span></button>
+      <button data-form="sleep"><i data-lucide="moon"></i><span><strong>睡眠月报</strong><small>补充本月作息</small></span></button>
+      <button data-form="expense"><i data-lucide="receipt-text"></i><span><strong>月度支出</strong><small>填写一个月的分类汇总</small></span></button>
+      <button data-form="message"><i data-lucide="message-circle-heart"></i><span><strong>写留言</strong><small>给对方留一句话</small></span></button>
+    </div>
+  </dialog>
+
+  <dialog id="form-dialog">
+    <form id="record-form">
+      <div class="dialog-head"><div><small id="form-kicker"></small><h2 id="form-title"></h2></div><button type="button" class="icon-btn close-dialog"><i data-lucide="x"></i></button></div>
+      <div class="form-grid" id="form-fields"></div>
+      <div class="dialog-actions"><button type="button" class="btn danger-ghost form-delete-button" id="form-delete" hidden><i data-lucide="trash-2"></i>删除计划</button><button type="button" class="btn ghost close-dialog">取消</button><button class="btn primary" type="submit"><i data-lucide="check"></i><span id="form-submit">保存</span></button></div>
+    </form>
+  </dialog>
+
+  <dialog id="account-dialog" class="account-dialog">
+    <div class="dialog-head">
+      <div><small>正式版账户与同步</small><h2 id="account-title">情侣空间</h2></div>
+      <button type="button" class="icon-btn close-dialog"><i data-lucide="x"></i></button>
+    </div>
+    <div id="account-content" class="account-content"></div>
+  </dialog>
+
+  <dialog id="intimacy-detail-dialog" class="small-dialog">
+    <div class="dialog-head">
+      <div><small>亲密日历</small><h2 id="intimacy-detail-date"></h2></div>
+      <button type="button" class="icon-btn close-dialog"><i data-lucide="x"></i></button>
+    </div>
+    <div class="heart-detail">
+      <span class="detail-heart" aria-hidden="true">♥</span>
+      <p id="intimacy-detail-note"></p>
+    </div>
+    <div class="dialog-actions">
+      <button type="button" class="btn danger-ghost" id="intimacy-remove">移除这颗心</button>
+      <button type="button" class="btn primary" id="intimacy-edit"><i data-lucide="pencil"></i>修改</button>
+    </div>
+  </dialog>
+
+  <dialog id="intimacy-remove-dialog" class="small-dialog">
+    <div class="dialog-head">
+      <div><small>再次确认</small><h2 id="intimacy-remove-title">移除这颗心？</h2></div>
+      <button type="button" class="icon-btn close-dialog"><i data-lucide="x"></i></button>
+    </div>
+    <div class="confirm-copy"><p id="intimacy-remove-copy">日期和悄悄话都会从两个人的日历中删除，这个操作不能撤销。</p></div>
+    <div class="dialog-actions">
+      <button type="button" class="btn ghost close-dialog">取消</button>
+      <button type="button" class="btn danger" id="intimacy-remove-confirm">确认移除</button>
+    </div>
+  </dialog>
+
+  <dialog id="lightbox-dialog" class="lightbox-dialog">
+    <button type="button" class="icon-btn close-dialog lightbox-close" aria-label="关闭"><i data-lucide="x"></i></button>
+    <button type="button" class="icon-btn lightbox-nav lightbox-prev" data-gallery-shift="-1" aria-label="上一张"><i data-lucide="chevron-left"></i></button>
+    <img id="lightbox-image" alt="图片大图">
+    <button type="button" class="icon-btn lightbox-nav lightbox-next" data-gallery-shift="1" aria-label="下一张"><i data-lucide="chevron-right"></i></button>
+    <span id="lightbox-counter" class="lightbox-counter"></span>
+  </dialog>
+
+  <dialog id="memory-gallery-dialog" class="memory-gallery-dialog">
+    <div class="dialog-head">
+      <div><small>生活回忆</small><h2 id="memory-gallery-title">回忆照片</h2></div>
+      <button type="button" class="icon-btn close-dialog" aria-label="关闭"><i data-lucide="x"></i></button>
+    </div>
+    <div id="memory-gallery-grid" class="memory-gallery-grid"></div>
+  </dialog>
+
+  <dialog id="video-dialog" class="video-dialog">
+    <button type="button" class="icon-btn close-dialog lightbox-close" aria-label="关闭"><i data-lucide="x"></i></button>
+    <video id="video-player" controls playsinline preload="metadata"></video>
+  </dialog>
+
+  <dialog id="home-album-dialog" class="album-dialog">
+    <div class="dialog-head">
+      <div><small>首页相册</small><h2>我们的照片</h2></div>
+      <div class="album-head-actions"><select id="album-year-filter" aria-label="按年份查看"><option value="all">全部</option></select><button type="button" class="icon-btn close-dialog" aria-label="关闭"><i data-lucide="x"></i></button></div>
+    </div>
+    <div id="home-album-grid" class="home-album-grid"></div>
+    <div class="dialog-actions"><button type="button" class="btn primary" data-form="homePhoto"><i data-lucide="image-plus"></i>上传新照片</button></div>
+  </dialog>
+
+  <dialog id="goal-detail-dialog" class="goal-detail-dialog">
+    <div class="dialog-head">
+      <div><small>共同成长</small><h2 id="goal-detail-title"></h2></div>
+      <button type="button" class="icon-btn close-dialog" aria-label="关闭"><i data-lucide="x"></i></button>
+    </div>
+    <div id="goal-detail-content" class="goal-detail-content"></div>
+    <div class="dialog-actions"><button type="button" class="btn outline" id="goal-detail-add"><i data-lucide="plus"></i>记录进展</button></div>
+  </dialog>
+
+  <dialog id="letter-dialog" class="letter-dialog">
+    <div class="dialog-head">
+      <div><small>未来信箱</small><h2 id="letter-title"></h2></div>
+      <button type="button" class="icon-btn close-dialog"><i data-lucide="x"></i></button>
+    </div>
+    <div class="letter-content">
+      <p id="letter-meta"></p>
+      <div id="letter-text"></div>
+    </div>
+    <div class="dialog-actions letter-detail-actions">
+      <button type="button" class="btn outline" id="letter-edit"><i data-lucide="pencil"></i>编辑</button>
+      <button type="button" class="btn danger-ghost" id="letter-delete"><i data-lucide="trash-2"></i>删除</button>
+    </div>
+  </dialog>
+
+  <dialog id="note-dialog" class="note-editor-dialog">
+    <form id="note-form">
+      <div class="dialog-head">
+        <div class="note-dialog-heading"><small id="note-editor-kicker">新建笔记</small><input name="title" id="note-editor-title" class="note-title-header" placeholder="笔记标题" autocomplete="off" required></div>
+        <button type="button" class="icon-btn close-dialog"><i data-lucide="x"></i></button>
+      </div>
+      <div class="note-editor-fields">
+        <div class="note-toolbar" aria-label="文字格式">
+          <button type="button" data-note-command="undo" title="撤销"><i data-lucide="undo-2"></i></button>
+          <button type="button" data-note-command="redo" title="重做"><i data-lucide="redo-2"></i></button>
+          <button type="button" data-note-command="bold" title="加粗"><b>B</b></button>
+          <button type="button" data-note-command="insertOrderedList" title="自动编号"><i data-lucide="list-ordered"></i></button>
+          <button type="button" data-note-command="insertUnorderedList" title="项目列表"><i data-lucide="list"></i></button>
+          <button type="button" data-note-command="indent" title="增加缩进（Tab）"><i data-lucide="indent-increase"></i></button>
+          <button type="button" data-note-command="outdent" title="减少缩进（Shift + Tab）"><i data-lucide="indent-decrease"></i></button>
+          <button type="button" data-note-command="justifyLeft" title="左对齐"><i data-lucide="align-left"></i></button>
+          <button type="button" data-note-command="justifyCenter" title="居中"><i data-lucide="align-center"></i></button>
+          <button type="button" data-note-command="justifyRight" title="右对齐"><i data-lucide="align-right"></i></button>
+          <button type="button" data-note-check title="勾选框"><i data-lucide="square-check-big"></i></button>
+          <button type="button" id="note-insert-image" title="插入图片"><i data-lucide="image-plus"></i></button>
+          <input id="note-inline-image-input" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden>
+          <button type="button" id="note-record-audio" title="录制音频"><i data-lucide="mic"></i></button>
+          <select data-note-size title="字号"><option value="3">正文</option><option value="4">较大</option><option value="5">标题</option></select>
+          <div class="note-color-palette" aria-label="字体颜色">
+            <button type="button" class="note-color-swatch ink" data-note-color="#292d2a" title="黑色"></button>
+            <button type="button" class="note-color-swatch red" data-note-color="#d64545" title="红色"></button>
+            <button type="button" class="note-color-swatch gold-swatch" data-note-color="#b88424" title="黄色"></button>
+            <button type="button" class="note-color-swatch green-swatch" data-note-color="#4f855d" title="绿色"></button>
+            <button type="button" class="note-color-swatch blue-swatch" data-note-color="#477d9d" title="蓝色"></button>
+            <button type="button" class="note-color-swatch purple-swatch" data-note-color="#805990" title="紫色"></button>
+          </div>
+        </div>
+        <div id="note-editor" class="note-editor" contenteditable="true" lang="zh-CN" role="textbox" aria-multiline="true" spellcheck="false" data-placeholder="写下做法、清单或想一起保存的内容……"></div>
+        <div class="note-meta-grid">
+          <label>标签<input name="tags" placeholder="菜谱，清单，……用逗号分隔"></label>
+          <label>置顶<select name="pinned"><option value="false">普通笔记</option><option value="true">置顶</option></select></label>
+        </div>
+        <label class="note-attachment-field">附件
+          <input name="attachments" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,audio/*,.pdf,.doc,.docx,.xls,.xlsx" multiple>
+          <div id="note-existing-attachments" class="saved-media-list"></div>
+          <div class="image-previews" data-preview-for="attachments"></div>
+        </label>
+      </div>
+      <div class="dialog-actions">
+        <button type="button" class="btn danger-ghost" id="note-delete" hidden><i data-lucide="trash-2"></i>删除</button>
+        <button type="button" class="btn ghost close-dialog">取消</button>
+        <button type="button" class="btn outline" id="note-export"><i data-lucide="image-down"></i>保存长图</button>
+        <button class="btn primary" type="submit"><i data-lucide="check"></i>保存笔记</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast"></div>
+  <script src="assets/vendor/supabase.js"></script>
+  <script src="config.js"></script>
+  <script src="cloud.js"></script>
+  <script src="assets/vendor/lucide.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
