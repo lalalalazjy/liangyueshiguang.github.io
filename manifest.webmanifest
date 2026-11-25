@@ -1,0 +1,10 @@
+{
+  "name": "在一起｜情侣共创生活看板",
+  "short_name": "在一起",
+  "description": "计划、记录和回顾两个人的共同生活",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f3f5f2",
+  "theme_color": "#e86f57",
+  "lang": "zh-CN"
+}
